@@ -8,18 +8,26 @@ const { Server } = require("socket.io");
 
 const io = new Server(server);
 
-io.on("connection", (socket) => {
-  console.log("a user connected");
+const npsOne = io.of("/npsOne") ;
+const npsTwo = io.of("/npsTwo") ;
+
+npsOne.on("connection", (socket) => {
+  console.log("a user connected to npsOne");
   
-  // Broadcast to all clients
-  io.sockets.emit("broadcast", "A new user has joined the chat");
-
-
-  // Broadcast to all clients except the sender
-  socket.broadcast.emit("broadcastWithoutHim", "A new user has joined the chat");
+  socket.emit("message", "Hello from npsOne");
 
   socket.on("disconnect", () => {
-    console.log("user disconnected");
+    console.log("user disconnected from npsOne");
+  });
+});
+
+npsTwo.on("connection", (socket) => {
+  console.log("a user connected to npsTwo");
+  
+  socket.emit("message", "Hello from npsTwo");
+
+  socket.on("disconnect", () => {
+    console.log("user disconnected from npsTwo");
   });
 });
 

@@ -10,13 +10,16 @@
 
     <script src="/socket.io/socket.io.js"></script>
     <script>
-      const socket = io();
+      const socketOne = io("/npsOne");
+      const socketTwo = io("/npsTwo");
 
-      socket.on("broadcast", (data) => {
+      socketOne.on("message", (data) => {
         console.log(data);
-        document.getElementById("element").innerHTML = `<li>${data}</li>`;
       });
       
+      socketTwo.on("message", (data) => {
+        console.log(data);
+      });
     </script>
   </body>
 </html>
