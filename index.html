@@ -6,19 +6,17 @@
     <title>Socket</title>
   </head>
   <body>
-    <h1>Home</h1>
+    <ul id="element"></ul>
 
     <script src="/socket.io/socket.io.js"></script>
     <script>
       const socket = io();
 
-      //using built in function
-      socket.send("Hello World from a user");
-
-      //using custom event
-      setInterval(() => {
-        socket.emit("sendData", { message: "Hello from server custom event" });
-      }, 2000);
+      socket.on("broadcast", (data) => {
+        console.log(data);
+        document.getElementById("element").innerHTML = `<li>${data}</li>`;
+      });
+      
     </script>
   </body>
 </html>

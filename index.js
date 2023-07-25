@@ -10,14 +10,13 @@ const io = new Server(server);
 
 io.on("connection", (socket) => {
   console.log("a user connected");
-  // using built in event
-  socket.on("message", (msg) => {
-    console.log(msg);
-  });
-  //using custom event
-  socket.on("sendData", (data) => {
-    console.log(data);
-  });
+  
+  // Broadcast to all clients
+  io.sockets.emit("broadcast", "A new user has joined the chat");
+
+
+  // Broadcast to all clients except the sender
+  socket.broadcast.emit("broadcastWithoutHim", "A new user has joined the chat");
 
   socket.on("disconnect", () => {
     console.log("user disconnected");
