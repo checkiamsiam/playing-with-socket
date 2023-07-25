@@ -12,13 +12,13 @@
     <script>
       const socket = io();
 
-      socket.on("message", (data) => {
-        console.log(data);
-      });
+      //using built in function
+      socket.send("Hello World from a user");
 
-      socket.on("sendData", (data) => {
-        console.log(data);
-      })
+      //using custom event
+      setInterval(() => {
+        socket.emit("sendData", { message: "Hello from server custom event" });
+      }, 2000);
     </script>
   </body>
 </html>
