@@ -8,23 +8,14 @@ const { Server } = require("socket.io");
 
 const io = new Server(server);
 
-const npsOne = io.of("/npsOne") ;
-const npsTwo = io.of("/npsTwo") ;
 
-npsOne.on("connection", (socket) => {
-  console.log("a user connected to npsOne");
-  
-  socket.emit("message", "Hello from npsOne");
-
-  socket.on("disconnect", () => {
-    console.log("user disconnected from npsOne");
-  });
-});
-
-npsTwo.on("connection", (socket) => {
+io.on("connection", (socket) => {
   console.log("a user connected to npsTwo");
   
-  socket.emit("message", "Hello from npsTwo");
+  socket.on("chat" , (msg) => {
+    console.log(msg);
+    io.emit("chat" , msg);
+  })
 
   socket.on("disconnect", () => {
     console.log("user disconnected from npsTwo");

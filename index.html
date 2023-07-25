@@ -6,20 +6,32 @@
     <title>Socket</title>
   </head>
   <body>
-    <ul id="element"></ul>
+    <h1>Socket Chat</h1>
+    <div>
+      <ul id="chats"></ul>
+    </div>
+    <input type="text" id="input" />
+    <button onclick="send()" id="send">Send</button>
 
     <script src="/socket.io/socket.io.js"></script>
     <script>
-      const socketOne = io("/npsOne");
-      const socketTwo = io("/npsTwo");
+      const socket = io();
 
-      socketOne.on("message", (data) => {
-        console.log(data);
-      });
-      
-      socketTwo.on("message", (data) => {
-        console.log(data);
-      });
+      socket.on("chat", (msg) => {
+        const i = document.getElementById("chats");
+        const newNode = document.createElement("li");
+        newNode.textContent = msg;
+        i.appendChild(newNode);
+      })
+
+      const send = () => {
+        const input = document.getElementById("input");
+        const value = input.value;
+        socket.emit("chat", value);
+        input.value = "";
+      };
+
+ 
     </script>
   </body>
 </html>
