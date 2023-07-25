@@ -10,6 +10,13 @@ const io = new Server(server);
 
 io.on("connection", (socket) => {
   console.log("a user connected");
+  // using built in event
+  socket.send("Hello from server");
+  //using custom event
+  setInterval(() => {
+    socket.emit("sendData", {message: "Hello from server custom event"});
+  }, 2000);
+
   socket.on("disconnect", () => {
     console.log("user disconnected");
   });
